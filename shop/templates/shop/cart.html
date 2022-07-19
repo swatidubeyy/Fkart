@@ -1,0 +1,226 @@
+{%extends 'shop\basic.html'%}
+{% load static %}
+{% block css %}
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+h1,.h2{
+color:Red
+}
+.pic{
+height:30rem;
+background:url('{%static "shop\img\danbo.jpg"%}') ;
+background-size:cover;
+display:flex;
+align-items:center;
+justify-content:center
+}
+form input{
+background-color:white;
+color:blue
+}
+label{
+color:orange
+}
+
+#display li,input,textarea{
+background-color:white
+}
+{% endblock %}
+{% block title %}MyCart-IKART{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    {% if msg != "none" %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{msg}}</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{%endif%}
+  <div class="  d-flex justify-content-center"> <h1 class="my-2" style="border-bottom:1px dotted teal">Hello! Please Review Your Items..</h1></div>
+<div class="container mb-5" >
+  <ul class=" container" id="display">
+</ul>
+  <span class="col-8 col-md-3 col-l-8 col-sm-7" style="position: absolute;right:5rem;font-size:1.2rem"><b>Total Price:</b> <b id="price_total">0</b></span>
+ <br> <span class="col-8 col-md-3 col-l-8 col-sm-7 my-4" style="position: absolute;right:5rem;font-size:1.2rem"><b>Delievery: Rs.40</b></span>
+
+</div>
+  <br></div>
+  <div class="container-fluid d-flex justify-content-center my-4"> <span class="my-2" style="border-bottom:1px dotted teal"><h1 class="d-inline">Enter Your Details Here,</h1><h2 class="d-inline h2"> (Please Fill All Details Carefully)</h2> </span></div>
+ <div class="container-fluid d-flex justify-content-center row pl-3 ">
+  <form class="col-sm-6 col-xs-6 col-md-6" action="/shop/orderNow/" method="post">{% csrf_token %}
+  <div class="form-row">
+    <div class="form-group col-md-5">
+      <input type="hidden" class="form-control capitalize" id="item" name="items" required placeholder="Enter your name nere.." value="">
+      <label for="name1">Name</label>
+      <input type="hidden" class="form-control capitalize" id="totalprice" name="price" required placeholder="Enter your name nere.." value="">
+      <label for="name1">Name</label>
+      <input type="text" class="form-control" id="name1" name="name" required placeholder="Enter your name here..">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="email1">Email</label>
+      <input type="email" class="form-control" id="email1" name="email" required placeholder="Enter your email here..">
+    </div>
+    </div>
+
+   <div class="form-group">
+    <label for="phone1">Mobile</label>
+    <input type="tel" class="form-control" id="phone1" name="mobile" required  placeholder="Enter your mobile number" pattern="[6-9][0-9]{9}">
+  </div>
+
+   <div class="form-group">
+    <label for="phone2">Alternative Mobile</label>
+    <input type="tel" class="form-control" id="phone2" name="almobile" required placeholder="Enter your mobile number" pattern="[6-9][0-9]{9}">
+  </div>
+  <div class="form-group">
+    <label for="address">Address</label>
+    <textarea class="form-control" id="address" name="address" required placeholder="Enter your address"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="address2">Landmark</label>
+    <input type="text" class="form-control" id="address2" name="address2" required placeholder="Enter your nearby famous shop or mall or street name">
+    </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="city">City</label>
+      <input type="text" class="form-control" id="city" name="city" required placeholder="Enter your city here..">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="state">State</label>
+     <input type="text" class="form-control" id="state" name="state" required placeholder="Enter your state here..">
+    </div>
+    <div class="form-group col-md-2">
+      <label for="Zip">Zip</label>
+      <input type="text" class="form-control" id="Zip" name="zipcode" required placeholder="Enter your zip code...">
+    </div>
+  </div>
+  <div class="container mb-5 mr-4 ">
+  <button type="submit" class="btn btn-danger submit">Order Now</button>
+    </div>
+</form>
+ <img class="col-sm-4 col-xs-4  col-md-4 my-5 pl-5 ml-5" src="{%static 'shop/img/order2.jpg'%}">
+</div>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+<script>
+ cart=JSON.parse(localStorage.getItem('cart'))
+ var total=0;
+ displaykart(cart)
+ function displaykart(cart){
+ for(var i in cart){
+        total+=cart[i][0];
+    }
+let j=1;
+for(item in cart){
+if(cart[item][0]){
+display_item=`<li id="li${cart[item][2]}" class="list-group-item d-flex justify-content-between align-items-center text-capitalize" style="font-family: 'Lobster', cursive;color:teal;font-size:1.5rem">
+    <span class="col-xs-4">${j}.&nbsp;${cart[item][1].slice(0,35)}..</span>
+ <span class="badge badge-primary badge-pill col-xs-4" style="font-size:1rem">Qty:<span id="val${cart[item][2]}">${cart[item][0]}</span>  <button id="${cart[item][2]}" class="btn plus btn-warning md-mx-3 col-mx-0 delete" style="max-width:3rem"><svg width="0.7rem" height="0.7rem" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+</svg></button></span></li>`
+j++
+ $('#display').append(display_item)
+
+}}
+}
+elementkart(cart)
+function elementkart(cart){
+var total=0
+for(item in cart){
+if(cart[item][0]!=0){
+total+= cart[item][0]
+}
+}
+document.getElementById('counter').innerHTML = total;
+price_total(cart)
+}
+$('.delete').on('click',function(){
+id=this.id
+cart[id][0]=Math.max(0,cart[id][0]-1);
+localStorage.setItem('cart',JSON.stringify(cart))
+document.getElementById('val' + cart[id][2] ).innerHTML = cart[id][0];
+elementkart(cart)
+checkCart(cart)
+price_total(cart)
+})
+
+function checkCart(cart){
+for(item in cart){
+if(cart[item][0]==0){
+$('#'+'li'+cart[item][2]).remove()
+delete(cart[item])
+localStorage.setItem('cart', JSON.stringify(cart));
+}}
+length=0
+for(item in cart){
+length+=1
+}
+if(length==0){
+var mystr=`<div class="container pic border border-info my-3 col-12 col-md-12 col-xs-12 col-l-12")'><h1 class="d-flex justify-content-center" style="font-size:3rem;color:orange;font-family: 'Lobster', cursive;">OOPS! Your Cart Is Empty..</h1></div>`
+$('#display').replaceWith(mystr)
+}
+}
+function price_total(cart){
+var price=0
+for(item in cart)
+{
+var op=cart[item][3].slice(6,)
+var qty=cart[item][0]
+qty=Number(qty)
+op=Number(op)
+price+=(op*qty)
+}
+$('#price_total').replaceWith(price)
+}
+price_total(cart)
+checkCart(cart)
+items(cart)
+function items(cart){
+var string=""
+for(item in cart){
+string+=cart[item][1]+':'+ cart[item][0]+", "
+}
+$('#item').val(string)
+price_total(cart)
+}
+$('.submit').on('click',function(){
+var name=document.getElementById('name1').value
+var address=document.getElementById('address').value
+var city=document.getElementById('city').value
+var address1=document.getElementById('address2').value
+var zip=document.getElementById('Zip').value
+var mobile=document.getElementById('phone1').value
+var email=document.getElementById('email1').value
+var state=document.getElementById('state').value
+if(name!='' && email!='' && mobile!='' && address!='' && address1!='' && zip!='' && state!='' && city!=''){
+var i=0
+var price=0
+var kart={}
+for(item in cart)
+{
+var op=cart[item][3].slice(6,)
+var qty=cart[item][0]
+qty=Number(qty)
+op=Number(op)
+
+price+=(op*qty)
+console.log(price)
+i+=1}
+price+=40
+$('#totalprice').attr('value',price)
+var name=document.getElementById('name').value
+var address=document.getElementById('address').value
+kart=[i,price,name,address]
+localStorage.removeItem('cart')
+localStorage.setItem('kart', JSON.stringify(kart))
+cart={}
+localStorage.setItem('cart', JSON.stringify(cart));
+checkCart(cart)}
+})
+</script>
+{% endblock %}

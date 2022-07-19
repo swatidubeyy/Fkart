@@ -1,0 +1,67 @@
+{%extends 'shop\basic.html'%}
+{% block title %}Track Order-IKART{% endblock %}
+{% block body %}
+
+{% load static %}
+<div class="container d-flex d-flex justify-content-center">
+<form action="/shop/tracknow/" method="POST">{% csrf_token %}
+    {% if msg != "none" %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong >{{msg}}</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{%endif%}
+ <h2 style="font-size:3rem;border-bottom:2px solid green;" class="my-4">Track Your Order</h2>
+
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+  </div>
+  <div class="form-group">
+    <label for="tid">Track Id</label>
+    <input type="text" class="form-control" id="tid" name="tid" placeholder="Enter your Track id" required>
+  </div>
+    <center><button type="submit " class="btn btn-danger">Track Now</button></center>
+</form>
+</div>
+{% if result != 'none' %}
+<ul class="list-group container mt-4 w-70">
+{%for item,date,time in result%}
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span class="col-4,col-md-4 col-sm-4 mx-3"><b>Status:</b>{{item}}</span>
+    <span class="col-4,col-md-4 col-sm-4 mx-3"><b>Date:</b>{{date}}</span>
+    <span class="col-4,col-md-4 col-sm-4 mx-3"><b>Time:</b>{{time}}</span>
+  </li>
+{% endfor %}
+  <center><span><a id="pr{{product.id}}" id="buypr{{product.id}}" href="/shop/" style="width:7rem;height:3rem" class="clicked btn btn-primary cart mt-4">Home</a></span></center>
+</ul>
+  {% endif %}
+<div class="container-fluid name mt-5">
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel ">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{%static 'shop/img/img3.jpeg'%}" class="d-block w-100 "style="height:37vh" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{%static 'shop/img/img1.jpg'%}" class="d-block w-100 h-40"style="height:37vh" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{%static 'shop/img/img4.jpg'%}" class="d-block w-100 h-40"style="height:37vh" alt="...">
+    </div>
+      <div class="carousel-item">
+      <img src="{%static 'shop/img/img5.jpg'%}" class="d-block w-100 h-40"style="height:37vh" alt="...">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+    </div>
+{% endblock%}

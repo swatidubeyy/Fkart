@@ -1,0 +1,72 @@
+{%extends 'shop\basic.html'%}
+{% block title %}TankYou-Ikart{%endblock%}
+{% load static %}
+{% block css %}
+.picture{
+height:80vh;
+width:80%;
+background:url('{%static "shop\img\thanks1.png"%}');
+background-size:100%,100%;
+background-repeat:no-repeat
+}
+.hur{
+padding-left:2rem
+}
+.fonh{
+font-size:1.2rem;padding-left:2rem
+}
+.display{
+color:teal;
+}
+@media only screen and (min-width: 730px){
+.display{
+margin-top:17rem;
+color:teal;
+padding-left:5rem;
+margin-bottom:4rem
+}
+.divop{
+font-size:3rem
+}
+.hur{
+padding-left:0rem
+}
+.fonh{
+font-size:1.5rem;padding-left:0
+}
+}
+{% endblock%}
+{% block body %}
+<div class="container">
+<div class="container picture py-5 " >
+<div class="container d-flex align-items-center justify-content-center flex-column display"></div>
+  <center>
+    <span  class="mt-1">
+      <b>Track Id: {{id}}</b>
+    </span></center>
+</div>
+</div>
+<br><br><br><br><br><br><br>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+date=new Date
+a=date.getDate()+4
+b=date.getMonth()
+c=date.getFullYear()
+date=new Date(c,b,a)
+a=date.getDate()
+b=date.getMonth()+1
+c=date.getFullYear()
+newdate=`${a},${b},${c}`
+ kart=JSON.parse(localStorage.getItem('kart'))
+ mystr= `<div class="container border border-info d-flex align-items-center divop justify-content-center flex-column" style="font-size:3rem">Order Placed
+     <span class="fonh">Delivery Date:${newdate}</span>
+    <span><h6  class="col-10 hur col-md-12 col-sm-12">Total Price for item ${kart[0]} is Rs:${kart[1]}</h6></span>
+        <span><h4>${kart[2]}</h2></span>
+        <span><h4>${kart[3]}</h2></span>
+    </div>`
+   $('.display').append(mystr)
+
+localStorage.removeItem('Kart')
+</script>
+{% endblock %}

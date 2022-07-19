@@ -1,0 +1,51 @@
+{%extends 'shop/basic.html'%}
+{% load static %}
+{% block title %}Contact Us-IKART{%endblock%}
+
+{% block css %}label{color:orange}
+body{
+background-color:rgb(215, 230, 245);
+}
+h2{color:Red}
+
+{%endblock%}
+{% block body %}
+<div class="container-fluid">
+<div class="row container-fluid d-flex justify-content-between">
+        <img class="col-sm-4 col-xs-4  col-md-4 mt-4" src="{%static 'shop/img/hurrey.jpg'%}" style="height:80%;width:60%;min-width:50%">
+        <div class="col-sm-5 col-xs-5 col-md-5 mt-5">
+<form action="/shop/contact/" method="POST">{% csrf_token %}
+    {% if error != "none" %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{error}}</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{%endif%}
+    <h2 style="font-size:3rem;border-bottom:2px solid green;" class="my-4">Contact Us</h2>
+     <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name" required>
+  </div>
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+  </div>
+ <div class="form-group">
+    <label for="mob">Mobile:</label>
+    <input type="tel" class="form-control" id="mob" name="mob" placeholder="Enter your Mobile" required>
+  </div>
+
+
+   <div class="form-group">
+    <label for="con">How May We Help You..</label>
+    <textarea class="form-control" id="con" name="con" rows="3" placeholder="write here.." required></textarea>
+  </div>
+    <button type="submit" class="btn btn-danger">submit</button>
+</form>
+
+</div>
+</div>
+</div>
+{%endblock%}

@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>{% block title%}{% endblock %}</title>
+<script src="https://kit.fontawesome.com/3172a55f3e.js" crossorigin="anonymous"></script>
+  <script>
+      if(localStorage.getItem('login')==undefined){
+      window.location.href='/'
+      }
+  </script>
+      <style>
+      @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+     nav a{
+     color:white
+     }
+
+   {% block css %}    {% endblock %}
+   </style>
+
+  </head>
+  <body>
+  {% load static %}
+ <nav class="navbar navbar-expand-lg" style="background-color:rgb(134, 62, 134);height:8vh;border-radius:6px;position:sticky;z-index:1;top:0px">
+     <a class="nav-link" href="/shop">FKART</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon" style="background-color:red"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto ml-3" >
+      <li class="nav-item active">
+        <a class="nav-link" href="/shop">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item ml-2">
+        <a class="nav-link" href="/shop/about/">About</a>
+      </li>
+
+        <li class="nav-item ml-2">
+        <a class="nav-link" href="/shop/contact/">ContactUs</a>
+      </li>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       User
+        </a>
+        <div class="dropdown-menu" id="logo" aria-labelledby="navbarDropdown">
+        </div>
+      </li>
+<a href="/shop/cart/" style="font-size:0.8rem;max-width:140px"  class="btn btn-danger mx-2 pt-2" >Go To Cart</a>
+<button style="font-size:0.8rem;max-width:140px" id="clear" onclick="clearCart()" class="btn btn-danger ml-2">CLEAR</button>
+    </ul>
+    <form method="get" action="/shop/search/" class="form-inline my-2 my-lg-0 mr-2" >
+      <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0 " type="submit"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+  <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+</svg></button>
+    </form>
+      <button id="popcart" type="button" class="btn btn-info " data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
+sagittis lacus vel augue laoreet rutrum faucibus." data-html="true">
+  Cart (<span id="counter">0</span>)
+</button>
+  </div>
+</nav>
+
+{% block body %}    {% endblock %}
+   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Register Here</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<!--     Sign UP form     -->
+        <form action="/shop/register/" method="post">{% csrf_token %}
+ <div class="container">
+    <div class="form-group col-md-12">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name">
+    </div>
+    <div class="form-group col-md-12">
+      <label for="Email">Email</label>
+      <input type="email" class="form-control" placeholder="Enter Your Email" id="Email" name="email">
+    </div>
+     <div class="form-group col-md-12">
+    <label for="mob">Mobile Number</label>
+    <input type="tel" pattern="[6-9][0-9]{9}" name="mob" class="form-control" id="mob" placeholder="Enter Your Mobile Number">
+  </div>
+    <div class="form-group col-md-12">
+      <label for="Password">Password</label>
+      <input type="password" class="form-control" name="pass" id="Password" placeholder="Enter Password" >
+    </div>
+      <div class="form-group col-md-12">
+      <label for="Pasword1">Confirm Password</label>
+      <input type="password" class="form-control" name="cpass" id="Pasword1" placeholder="Confirm Password">
+    </div>
+
+   <center>
+  <button type="submit" class="btn btn-primary">Sign in</button>
+   <button type="button" class="btn btn-danger mx-3" data-dismiss="modal">Return</button></center>
+   </div>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Login Now</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/shop/loginme/" method="post">{% csrf_token %}
+ <div class="container">
+    <div class="form-group col-md-12">
+      <label for="Emaillogin">Email</label>
+      <input type="email1" class="form-control" id="Emaillogin" name="emaillogin" placeholder="Enter Your Email">
+    </div>
+
+    <div class="form-group col-md-12">
+      <label for="Password4">Password</label>
+      <input type="password" class="form-control" id="Password4" name="passlogin" placeholder="Enter Your Password" >
+    </div>
+   <center>
+  <button type="submit" onclick="create()" class="btn btn-primary">Sign in</button>
+   <button type="button" class="btn btn-danger mx-3" data-dismiss="modal">Return</button></center>
+   </div>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="page-footer font-small mdb-color mt-5" style="background-color:black;color:white">
+
+  <div class="container text-center text-md-left">
+
+    <div class="row">
+
+      <div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
+
+        <h5 class="font-weight-bold text-uppercase mb-4">Fkart</h5>
+        <p>WElcome To FKART.</p>
+        <p>Fashion KART is an Indian e-commerce company based in Bangalore, Karnataka, India. It was founded by Ms Swati Dubey</p>
+
+      </div>
+
+
+      <hr class="clearfix w-100 d-md-none">
+
+
+      <div class="col-md-2 col-lg-2 mx-auto my-md-4 my-0 mt-4 mb-1">
+
+
+        <h5 class="font-weight-bold text-uppercase mb-4">About</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <p>
+              <a href="#!">PROJECTS</a>
+            </p>
+          </li>
+          <li>
+            <p>
+              <a href="#!">ABOUT US</a>
+            </p>
+          </li>
+          <li>
+            <p>
+              <a href="#!">BLOG</a>
+            </p>
+          </li>
+          <li>
+            <p>
+              <a href="#!">AWARDS</a>
+            </p>
+          </li>
+        </ul>
+
+      </div>
+
+      <hr class="clearfix w-100 d-md-none">
+
+      <div class="col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
+        <h5 class="font-weight-bold text-uppercase mb-4">Address</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <p>
+              <i class="fas fa-home mr-3"></i> Geeta Palli Alambagh LUCKNOW</p>
+          </li>
+          <li>
+            <p>
+              <i class="fas fa-envelope mr-3"></i> swatidubey914@gmail.com</p>
+          </li>
+          <li>
+            <p>
+              <i class="fas fa-phone mr-3"></i> 6388866704</p>
+          </li>
+          <li>
+            <p>
+              <i class="fas fa-print mr-3"></i> 8004005622</p>
+          </li>
+        </ul>
+
+      </div>
+
+
+      <hr class="clearfix w-100 d-md-none">
+
+      <div class="col-md-2 col-lg-2 text-center mx-auto my-4">
+
+
+        <h5 class="font-weight-bold text-uppercase mb-4">Follow Us</h5>
+
+        <a type="button"  class="btn-floating btn-fb">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a type="button" class="btn-floating btn-tw">
+          <i class="fab fa-twitter"></i>
+        </a>
+
+        <a type="button" class="btn-floating btn-gplus">
+          <i class="fab fa-google-plus-g"></i>
+        </a>
+        <a type="button" class="btn-floating btn-dribbble">
+          <i class="fab fa-dribbble"></i>
+        </a>
+
+      </div>
+
+
+    </div>
+
+  </div>
+  <div class="footer-copyright text-center py-3">© 2022 Copyright:
+    <a href="https://mdbootstrap.com/"> www.FKART.com</a>
+  </div>
+
+</footer>
+
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script>
+     login()
+     function login(){
+      if(localStorage.getItem('login')!=undefined){
+      login=JSON.parse(localStorage.getItem('login'))
+     var logo=`<center><a id='myordera' ><button style='max-width:120px' onclick='myorders()' class="btn btn-primary">MY Orders</button></a>
+           <a id='logoutbutton' href=""><button style='max-width:120px' class=" btn btn-danger mt-4 "style='min-width:100px'>Logout</button></a></center>`
+      }
+      else{
+      var logo=`  <center>
+           <button type="button" style='max-width:120px' class="btn btn-warning mx-2" data-toggle="modal" data-target="#exampleModal1">
+         Login Now
+        </button>
+           <button type="button" style='max-width:120px' class="btn btn-danger my-3 px-4 mx-2" data-toggle="modal" data-target="#exampleModal">
+          Signup
+        </button></center>`
+      }
+      $('#logo').append(logo)
+      }
+      function myorders(){
+      login=localStorage.getItem('login')
+      console.log(login)
+      email=login
+      $('#myordera').attr('href',`/shop/myorder/${login}`)
+      }
+      $('#logoutbutton').on('click',function(){
+      localStorage.removeItem("login");
+      window.location.replace("http://127.0.0.1:8000/");
+      })
+      function create(login){
+      localStorage.removeItem("login");
+      var email=document.getElementById('Emaillogin').value
+      var login1=email
+      localStorage.setItem('login', JSON.stringify(login1))
+      }
+  </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>
